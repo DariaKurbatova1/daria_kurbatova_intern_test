@@ -24,10 +24,15 @@ export type CreateTodoInput = {
   title: Scalars['String']['input'];
 };
 
+export type DeleteTodoInput = {
+  id: Scalars['String']['input'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   createSomething: Something;
   createTodo: Todo;
+  deleteTodo: Todo;
   updateTodoCompletion: Todo;
   updateTodoTitle: Todo;
 };
@@ -40,6 +45,11 @@ export type MutationCreateSomethingArgs = {
 
 export type MutationCreateTodoArgs = {
   input: CreateTodoInput;
+};
+
+
+export type MutationDeleteTodoArgs = {
+  input: DeleteTodoInput;
 };
 
 
@@ -169,6 +179,7 @@ export type ResolversTypes = {
   Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
   CreateSomethingInput: CreateSomethingInput;
   CreateTodoInput: CreateTodoInput;
+  DeleteTodoInput: DeleteTodoInput;
   ID: ResolverTypeWrapper<Scalars['ID']['output']>;
   Mutation: ResolverTypeWrapper<{}>;
   Query: ResolverTypeWrapper<{}>;
@@ -184,6 +195,7 @@ export type ResolversParentTypes = {
   Boolean: Scalars['Boolean']['output'];
   CreateSomethingInput: CreateSomethingInput;
   CreateTodoInput: CreateTodoInput;
+  DeleteTodoInput: DeleteTodoInput;
   ID: Scalars['ID']['output'];
   Mutation: {};
   Query: {};
@@ -197,6 +209,7 @@ export type ResolversParentTypes = {
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   createSomething?: Resolver<ResolversTypes['Something'], ParentType, ContextType, RequireFields<MutationCreateSomethingArgs, 'input'>>;
   createTodo?: Resolver<ResolversTypes['Todo'], ParentType, ContextType, RequireFields<MutationCreateTodoArgs, 'input'>>;
+  deleteTodo?: Resolver<ResolversTypes['Todo'], ParentType, ContextType, RequireFields<MutationDeleteTodoArgs, 'input'>>;
   updateTodoCompletion?: Resolver<ResolversTypes['Todo'], ParentType, ContextType, RequireFields<MutationUpdateTodoCompletionArgs, 'input'>>;
   updateTodoTitle?: Resolver<ResolversTypes['Todo'], ParentType, ContextType, RequireFields<MutationUpdateTodoTitleArgs, 'input'>>;
 };

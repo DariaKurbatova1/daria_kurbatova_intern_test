@@ -48,6 +48,7 @@ export const Mutation: IMutation<Context> = {
       updatedAt: todo.updatedAt.toISOString(),
     };
   },
+
   updateTodoTitle: async(_, { input }, { prisma }) => {
     const {id, title} = input;
     const todo = await prisma.todo.update({
@@ -56,6 +57,20 @@ export const Mutation: IMutation<Context> = {
         title,
         updatedAt: new Date().toISOString(),
       }
+    });
+    return {
+      id: todo.id,
+      title: todo.title,
+      completed: todo.completed,
+      createdAt: todo.createdAt.toISOString(),
+      updatedAt: todo.updatedAt.toISOString(),
+    };
+  },
+
+  deleteTodo: async(_, { input }, { prisma }) => {
+    const {id} = input;
+    const todo = await prisma.todo.delete({
+      where: {id}
     });
     return {
       id: todo.id,
