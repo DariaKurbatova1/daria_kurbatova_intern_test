@@ -62,6 +62,11 @@ export type MutationUpdateTodoTitleArgs = {
   input: UpdateTodoTitleInput;
 };
 
+export type PaginationInput = {
+  limit: Scalars['Int']['input'];
+  page: Scalars['Int']['input'];
+};
+
 export type Query = {
   __typename?: 'Query';
   getTodo?: Maybe<Todo>;
@@ -76,8 +81,14 @@ export type QueryGetTodoArgs = {
 };
 
 
+export type QueryGetTodosArgs = {
+  pagination?: InputMaybe<PaginationInput>;
+};
+
+
 export type QueryGetTodosByCompletionArgs = {
   completed: Scalars['Boolean']['input'];
+  pagination?: InputMaybe<PaginationInput>;
 };
 
 export type Something = {
@@ -181,7 +192,9 @@ export type ResolversTypes = {
   CreateTodoInput: CreateTodoInput;
   DeleteTodoInput: DeleteTodoInput;
   ID: ResolverTypeWrapper<Scalars['ID']['output']>;
+  Int: ResolverTypeWrapper<Scalars['Int']['output']>;
   Mutation: ResolverTypeWrapper<{}>;
+  PaginationInput: PaginationInput;
   Query: ResolverTypeWrapper<{}>;
   Something: ResolverTypeWrapper<Something>;
   String: ResolverTypeWrapper<Scalars['String']['output']>;
@@ -197,7 +210,9 @@ export type ResolversParentTypes = {
   CreateTodoInput: CreateTodoInput;
   DeleteTodoInput: DeleteTodoInput;
   ID: Scalars['ID']['output'];
+  Int: Scalars['Int']['output'];
   Mutation: {};
+  PaginationInput: PaginationInput;
   Query: {};
   Something: Something;
   String: Scalars['String']['output'];
@@ -216,7 +231,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   getTodo?: Resolver<Maybe<ResolversTypes['Todo']>, ParentType, ContextType, RequireFields<QueryGetTodoArgs, 'id'>>;
-  getTodos?: Resolver<Maybe<Array<ResolversTypes['Todo']>>, ParentType, ContextType>;
+  getTodos?: Resolver<Maybe<Array<ResolversTypes['Todo']>>, ParentType, ContextType, Partial<QueryGetTodosArgs>>;
   getTodosByCompletion?: Resolver<Maybe<Array<ResolversTypes['Todo']>>, ParentType, ContextType, RequireFields<QueryGetTodosByCompletionArgs, 'completed'>>;
   hello?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
 };

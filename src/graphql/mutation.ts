@@ -1,5 +1,5 @@
-import { type MutationResolvers as IMutation } from "./generated/graphql";
-import { Context } from "./context";
+import { type MutationResolvers as IMutation } from './generated/graphql';
+import { Context } from './context';
 
 export const Mutation: IMutation<Context> = {
   createSomething: async (_, { input }, { prisma }) => {
@@ -43,7 +43,7 @@ export const Mutation: IMutation<Context> = {
       where: {id},
     });
     if (!todo){
-      throw new Error("Todo not found")
+      throw new Error('Todo not found')
     }
     todo = await prisma.todo.update({
       where: {id},
@@ -71,7 +71,7 @@ export const Mutation: IMutation<Context> = {
       where: {id},
     });
     if (!todo){
-      throw new Error("Todo not found")
+      throw new Error('Todo not found')
     }
     todo = await prisma.todo.update({
       where: {id},
@@ -99,7 +99,7 @@ export const Mutation: IMutation<Context> = {
       where: {id},
     });
     if (!todo){
-      throw new Error("Todo not found")
+      throw new Error('Todo not found')
     }
     todo = await prisma.todo.delete({
       where: {id}

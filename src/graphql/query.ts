@@ -1,15 +1,15 @@
-import { type QueryResolvers as IQuery } from "./generated/graphql";
-import { Context } from "./context";
+import { type QueryResolvers as IQuery } from './generated/graphql';
+import { Context } from './context';
 
 export const Query: IQuery<Context> = {
-  hello: () => "world",
+  hello: () => 'world',
 
   getTodo: async (_, { id }, { prisma }) => {
     const todo = await prisma.todo.findUnique({
       where: {id},
     });
     if (!todo){
-      throw new Error("Todo not found")
+      throw new Error('Todo not found')
     }
     return {
       id: todo.id,
@@ -20,8 +20,14 @@ export const Query: IQuery<Context> = {
     }
   },
 
-  getTodos: async (_, __, { prisma }) => {
-    const todos = await prisma.todo.findMany();
+  getTodos: async (_, { pagination }, { prisma }) => {
+    //if pagination inputs are not provided, show all results
+    const page = pagination?.page ?? 1;
+    const limit = pagination?.limit ?? Number.MAX_SAFE_INTEGER;
+    const todos = await prisma.todo.findMany({
+      skip: (page - 1) * limit,
+      take: limit,
+    });
     return todos.map(todo => ({
       id: todo.id,
       title: todo.title,
@@ -31,12 +37,17 @@ export const Query: IQuery<Context> = {
     }));
   },
 
-  getTodosByCompletion: async(_, {completed}, { prisma}) => {
+  getTodosByCompletion: async(_, {completed, pagination}, { prisma}) => {
     if (typeof completed !== 'boolean'){
       throw new Error('Completion status must be of type boolean.');
     }
+    //if pagination inputs are not provided, show all results
+    const page = pagination?.page ?? 1;
+    const limit = pagination?.limit ?? Number.MAX_SAFE_INTEGER;
     const todos = await prisma.todo.findMany({
-      where: {completed: completed}
+      where: {completed: completed},
+      skip: (page - 1) * limit,
+      take: limit,
     });
     return todos.map(todo => ({
       id: todo.id,
