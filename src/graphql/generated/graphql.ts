@@ -76,6 +76,7 @@ export type Query = {
   getTodo?: Maybe<Todo>;
   getTodos?: Maybe<Array<Todo>>;
   getTodosByCompletion?: Maybe<Array<Todo>>;
+  getUpcomingTodos?: Maybe<Array<Todo>>;
   hello?: Maybe<Scalars['String']['output']>;
 };
 
@@ -107,6 +108,11 @@ export type QueryGetTodosArgs = {
 
 export type QueryGetTodosByCompletionArgs = {
   completed: Scalars['Boolean']['input'];
+  pagination?: InputMaybe<PaginationInput>;
+};
+
+
+export type QueryGetUpcomingTodosArgs = {
   pagination?: InputMaybe<PaginationInput>;
 };
 
@@ -256,6 +262,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   getTodo?: Resolver<Maybe<ResolversTypes['Todo']>, ParentType, ContextType, RequireFields<QueryGetTodoArgs, 'id'>>;
   getTodos?: Resolver<Maybe<Array<ResolversTypes['Todo']>>, ParentType, ContextType, Partial<QueryGetTodosArgs>>;
   getTodosByCompletion?: Resolver<Maybe<Array<ResolversTypes['Todo']>>, ParentType, ContextType, RequireFields<QueryGetTodosByCompletionArgs, 'completed'>>;
+  getUpcomingTodos?: Resolver<Maybe<Array<ResolversTypes['Todo']>>, ParentType, ContextType, Partial<QueryGetUpcomingTodosArgs>>;
   hello?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
 };
 

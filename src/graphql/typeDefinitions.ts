@@ -24,6 +24,7 @@ export const typeDefs = /* GraphQL */ `
     getCompletedTodos(pagination: PaginationInput): [Todo!],
     getIncompleteTodos(pagination: PaginationInput): [Todo!],
     getOverdueTodos(pagination: PaginationInput): [Todo!],
+    getUpcomingTodos(pagination: PaginationInput): [Todo!],
   }
   
   input CreateTodoInput {
