@@ -15,4 +15,20 @@ export const typeDefs = /* GraphQL */ `
   type Query {
     hello: String
   }
+  
+  input CreateTodoInput {
+    title: String!
+  }
+  
+  type Todo {
+    id: ID!
+    title: String!
+    completed: Boolean!
+    createdAt: String!
+    updatedAt: String!
+  }
+  
+  type Mutation {
+    createTodo(input: CreateTodoInput!): Todo!
+  }
 `;
