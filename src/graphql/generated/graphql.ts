@@ -29,6 +29,7 @@ export type Mutation = {
   createSomething: Something;
   createTodo: Todo;
   updateTodoCompletion: Todo;
+  updateTodoTitle: Todo;
 };
 
 
@@ -44,6 +45,11 @@ export type MutationCreateTodoArgs = {
 
 export type MutationUpdateTodoCompletionArgs = {
   input: UpdateTodoCompletionInput;
+};
+
+
+export type MutationUpdateTodoTitleArgs = {
+  input: UpdateTodoTitleInput;
 };
 
 export type Query = {
@@ -75,6 +81,11 @@ export type Todo = {
 export type UpdateTodoCompletionInput = {
   completed: Scalars['Boolean']['input'];
   id: Scalars['ID']['input'];
+};
+
+export type UpdateTodoTitleInput = {
+  id: Scalars['ID']['input'];
+  title: Scalars['String']['input'];
 };
 
 
@@ -158,6 +169,7 @@ export type ResolversTypes = {
   String: ResolverTypeWrapper<Scalars['String']['output']>;
   Todo: ResolverTypeWrapper<Todo>;
   UpdateTodoCompletionInput: UpdateTodoCompletionInput;
+  UpdateTodoTitleInput: UpdateTodoTitleInput;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -172,12 +184,14 @@ export type ResolversParentTypes = {
   String: Scalars['String']['output'];
   Todo: Todo;
   UpdateTodoCompletionInput: UpdateTodoCompletionInput;
+  UpdateTodoTitleInput: UpdateTodoTitleInput;
 };
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   createSomething?: Resolver<ResolversTypes['Something'], ParentType, ContextType, RequireFields<MutationCreateSomethingArgs, 'input'>>;
   createTodo?: Resolver<ResolversTypes['Todo'], ParentType, ContextType, RequireFields<MutationCreateTodoArgs, 'input'>>;
   updateTodoCompletion?: Resolver<ResolversTypes['Todo'], ParentType, ContextType, RequireFields<MutationUpdateTodoCompletionArgs, 'input'>>;
+  updateTodoTitle?: Resolver<ResolversTypes['Todo'], ParentType, ContextType, RequireFields<MutationUpdateTodoTitleArgs, 'input'>>;
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
