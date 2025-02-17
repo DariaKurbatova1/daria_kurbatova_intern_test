@@ -17,7 +17,8 @@ export const typeDefs = /* GraphQL */ `
 
   type Query {
     hello: String,
-    getTodo(id: ID!): Todo
+    getTodo(id: ID!): Todo,
+    getTodos: [Todo!]
   }
   
   input CreateTodoInput {
