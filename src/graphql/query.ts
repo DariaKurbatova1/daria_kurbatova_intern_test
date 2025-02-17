@@ -20,8 +20,21 @@ export const Query: IQuery<Context> = {
     }
   },
 
-  getTodos: async (_, __dirname, { prisma }) => {
+  getTodos: async (_, __, { prisma }) => {
     const todos = await prisma.todo.findMany();
+    return todos.map(todo => ({
+      id: todo.id,
+      title: todo.title,
+      completed: todo.completed,
+      createdAt: todo.createdAt.toISOString(),
+      updatedAt: todo.updatedAt.toISOString(),
+    }));
+  },
+
+  getTodosByCompletion: async(_, {completed}, { prisma}) => {
+    const todos = await prisma.todo.findMany({
+      where: {completed: completed}
+    });
     return todos.map(todo => ({
       id: todo.id,
       title: todo.title,

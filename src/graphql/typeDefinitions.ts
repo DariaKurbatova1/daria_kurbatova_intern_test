@@ -18,7 +18,8 @@ export const typeDefs = /* GraphQL */ `
   type Query {
     hello: String,
     getTodo(id: ID!): Todo,
-    getTodos: [Todo!]
+    getTodos: [Todo!],
+    getTodosByCompletion(completed: Boolean!): [Todo!]
   }
   
   input CreateTodoInput {
@@ -40,5 +41,6 @@ export const typeDefs = /* GraphQL */ `
     id: ID!
     title: String!
   }
+
   
 `;

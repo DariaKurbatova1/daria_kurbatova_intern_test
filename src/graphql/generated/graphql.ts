@@ -56,12 +56,18 @@ export type Query = {
   __typename?: 'Query';
   getTodo?: Maybe<Todo>;
   getTodos?: Maybe<Array<Todo>>;
+  getTodosByCompletion?: Maybe<Array<Todo>>;
   hello?: Maybe<Scalars['String']['output']>;
 };
 
 
 export type QueryGetTodoArgs = {
   id: Scalars['ID']['input'];
+};
+
+
+export type QueryGetTodosByCompletionArgs = {
+  completed: Scalars['Boolean']['input'];
 };
 
 export type Something = {
@@ -198,6 +204,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   getTodo?: Resolver<Maybe<ResolversTypes['Todo']>, ParentType, ContextType, RequireFields<QueryGetTodoArgs, 'id'>>;
   getTodos?: Resolver<Maybe<Array<ResolversTypes['Todo']>>, ParentType, ContextType>;
+  getTodosByCompletion?: Resolver<Maybe<Array<ResolversTypes['Todo']>>, ParentType, ContextType, RequireFields<QueryGetTodosByCompletionArgs, 'completed'>>;
   hello?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
 };
 
