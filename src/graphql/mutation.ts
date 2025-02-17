@@ -69,6 +69,7 @@ export const Mutation: IMutation<Context> = {
       completed: todo.completed,
       createdAt: todo.createdAt.toISOString(),
       updatedAt: todo.updatedAt.toISOString(),
+      dueDate: todo.dueDate? todo.dueDate.toISOString() : null,
     };
   },
 
@@ -97,6 +98,7 @@ export const Mutation: IMutation<Context> = {
       completed: todo.completed,
       createdAt: todo.createdAt.toISOString(),
       updatedAt: todo.updatedAt.toISOString(),
+      dueDate: todo.dueDate? todo.dueDate.toISOString() : null,
     };
   },
 
@@ -121,6 +123,7 @@ export const Mutation: IMutation<Context> = {
       completed: todo.completed,
       createdAt: todo.createdAt.toISOString(),
       updatedAt: todo.updatedAt.toISOString(),
+      dueDate: todo.dueDate? todo.dueDate.toISOString() : null,
     };
   }
   
