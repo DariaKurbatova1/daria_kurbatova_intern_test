@@ -27,6 +27,9 @@ export const Query: IQuery<Context> = {
     const todos = await prisma.todo.findMany({
       skip: (page - 1) * limit,
       take: limit,
+      orderBy: {
+        createdAt: 'asc',
+      },
     });
     return todos.map(todo => ({
       id: todo.id,
@@ -43,6 +46,9 @@ export const Query: IQuery<Context> = {
       where: {completed: true},
       skip: (page - 1) * limit,
       take: limit,
+      orderBy: {
+        createdAt: 'asc',
+      },
     });
     return todos.map(todo => ({
       id: todo.id,
@@ -59,6 +65,9 @@ export const Query: IQuery<Context> = {
       where: {completed: false},
       skip: (page - 1) * limit,
       take: limit,
+      orderBy: {
+        createdAt: 'asc',
+      },
     });
     return todos.map(todo => ({
       id: todo.id,
@@ -79,6 +88,9 @@ export const Query: IQuery<Context> = {
       where: {completed: completed},
       skip: (page - 1) * limit,
       take: limit,
+      orderBy: {
+        createdAt: 'asc',
+      },
     });
     return todos.map(todo => ({
       id: todo.id,
