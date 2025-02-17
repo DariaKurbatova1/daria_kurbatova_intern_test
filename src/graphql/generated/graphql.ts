@@ -21,6 +21,7 @@ export type CreateSomethingInput = {
 };
 
 export type CreateTodoInput = {
+  dueDate?: InputMaybe<Scalars['String']['input']>;
   title: Scalars['String']['input'];
 };
 
@@ -71,6 +72,7 @@ export type Query = {
   __typename?: 'Query';
   getCompletedTodos?: Maybe<Array<Todo>>;
   getIncompleteTodos?: Maybe<Array<Todo>>;
+  getOverdueTodos?: Maybe<Array<Todo>>;
   getTodo?: Maybe<Todo>;
   getTodos?: Maybe<Array<Todo>>;
   getTodosByCompletion?: Maybe<Array<Todo>>;
@@ -84,6 +86,11 @@ export type QueryGetCompletedTodosArgs = {
 
 
 export type QueryGetIncompleteTodosArgs = {
+  pagination?: InputMaybe<PaginationInput>;
+};
+
+
+export type QueryGetOverdueTodosArgs = {
   pagination?: InputMaybe<PaginationInput>;
 };
 
@@ -113,6 +120,7 @@ export type Todo = {
   __typename?: 'Todo';
   completed: Scalars['Boolean']['output'];
   createdAt: Scalars['String']['output'];
+  dueDate?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   title: Scalars['String']['output'];
   updatedAt: Scalars['String']['output'];
@@ -244,6 +252,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   getCompletedTodos?: Resolver<Maybe<Array<ResolversTypes['Todo']>>, ParentType, ContextType, Partial<QueryGetCompletedTodosArgs>>;
   getIncompleteTodos?: Resolver<Maybe<Array<ResolversTypes['Todo']>>, ParentType, ContextType, Partial<QueryGetIncompleteTodosArgs>>;
+  getOverdueTodos?: Resolver<Maybe<Array<ResolversTypes['Todo']>>, ParentType, ContextType, Partial<QueryGetOverdueTodosArgs>>;
   getTodo?: Resolver<Maybe<ResolversTypes['Todo']>, ParentType, ContextType, RequireFields<QueryGetTodoArgs, 'id'>>;
   getTodos?: Resolver<Maybe<Array<ResolversTypes['Todo']>>, ParentType, ContextType, Partial<QueryGetTodosArgs>>;
   getTodosByCompletion?: Resolver<Maybe<Array<ResolversTypes['Todo']>>, ParentType, ContextType, RequireFields<QueryGetTodosByCompletionArgs, 'completed'>>;
@@ -259,6 +268,7 @@ export type SomethingResolvers<ContextType = any, ParentType extends ResolversPa
 export type TodoResolvers<ContextType = any, ParentType extends ResolversParentTypes['Todo'] = ResolversParentTypes['Todo']> = {
   completed?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  dueDate?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   updatedAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>;

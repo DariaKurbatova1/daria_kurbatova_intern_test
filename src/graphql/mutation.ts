@@ -18,12 +18,18 @@ export const Mutation: IMutation<Context> = {
     if (!input.title || typeof input.title !== 'string'){
       throw new Error('Title input is required and must be a string.')
     }
+    let dueDate = null;
+    //if dueDate is specified, format it correctly
+    if (input.dueDate){
+      dueDate = new Date(input.dueDate).toISOString();
+    }
     const todo = await prisma.todo.create({
       data:  {
         title: input.title,
         completed: false,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
+        dueDate: dueDate,
       }
     });
     return {
@@ -32,6 +38,7 @@ export const Mutation: IMutation<Context> = {
       completed: todo.completed,
       createdAt: todo.createdAt.toISOString(),
       updatedAt: todo.updatedAt.toISOString(),
+      dueDate: todo.dueDate? todo.dueDate.toISOString() : null,
     };
   },
   updateTodoCompletion: async(_, { input }, { prisma }) => {
@@ -112,4 +119,5 @@ export const Mutation: IMutation<Context> = {
       updatedAt: todo.updatedAt.toISOString(),
     };
   }
+  
 };
