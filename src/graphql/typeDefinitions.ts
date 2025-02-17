@@ -45,6 +45,5 @@ export const typeDefs = /* GraphQL */ `
     id: ID!
     title: String!
   }
-
   
 `;

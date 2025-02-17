@@ -15,6 +15,9 @@ export const Mutation: IMutation<Context> = {
     };
   },
   createTodo: async (_, { input }, { prisma }) => {
+    if (!input.title || typeof input.title !== 'string'){
+      throw new Error('Title input is required and must be a string.')
+    }
     const todo = await prisma.todo.create({
       data:  {
         title: input.title,
@@ -32,8 +35,17 @@ export const Mutation: IMutation<Context> = {
     };
   },
   updateTodoCompletion: async(_, { input }, { prisma }) => {
+    if (!input.completed || typeof input.completed !== 'boolean'){
+      throw new Error('Completion status input is required and must be a boolean.')
+    }
     const {id, completed} = input;
-    const todo = await prisma.todo.update({
+    let todo = await prisma.todo.findUnique({
+      where: {id},
+    });
+    if (!todo){
+      throw new Error("Todo not found")
+    }
+    todo = await prisma.todo.update({
       where: {id},
       data: {
         completed,
@@ -50,8 +62,18 @@ export const Mutation: IMutation<Context> = {
   },
 
   updateTodoTitle: async(_, { input }, { prisma }) => {
+    if (!input.id || typeof input.id !== 'string' 
+      || !input.title || typeof input.title !== 'string'){
+      throw new Error('Todo id and title are required and must be strings.')
+    }
     const {id, title} = input;
-    const todo = await prisma.todo.update({
+    let todo = await prisma.todo.findUnique({
+      where: {id},
+    });
+    if (!todo){
+      throw new Error("Todo not found")
+    }
+    todo = await prisma.todo.update({
       where: {id},
       data: {
         title,
@@ -68,8 +90,18 @@ export const Mutation: IMutation<Context> = {
   },
 
   deleteTodo: async(_, { input }, { prisma }) => {
+    
+    if (!input.id || typeof input.id !== 'string'){
+      throw new Error('Todo id and title are required and must be strings.')
+    }
     const {id} = input;
-    const todo = await prisma.todo.delete({
+    let todo = await prisma.todo.findUnique({
+      where: {id},
+    });
+    if (!todo){
+      throw new Error("Todo not found")
+    }
+    todo = await prisma.todo.delete({
       where: {id}
     });
     return {
