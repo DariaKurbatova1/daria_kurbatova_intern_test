@@ -20,7 +20,9 @@ export const typeDefs = /* GraphQL */ `
     hello: String,
     getTodo(id: ID!): Todo,
     getTodos(pagination: PaginationInput): [Todo!],
-    getTodosByCompletion(completed: Boolean!, pagination: PaginationInput): [Todo!]
+    getTodosByCompletion(completed: Boolean!, pagination: PaginationInput): [Todo!],
+    getCompletedTodos(pagination: PaginationInput): [Todo!],
+    getIncompleteTodos(pagination: PaginationInput): [Todo!],
   }
   
   input CreateTodoInput {

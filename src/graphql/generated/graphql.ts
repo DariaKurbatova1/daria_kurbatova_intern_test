@@ -69,10 +69,22 @@ export type PaginationInput = {
 
 export type Query = {
   __typename?: 'Query';
+  getCompletedTodos?: Maybe<Array<Todo>>;
+  getIncompleteTodos?: Maybe<Array<Todo>>;
   getTodo?: Maybe<Todo>;
   getTodos?: Maybe<Array<Todo>>;
   getTodosByCompletion?: Maybe<Array<Todo>>;
   hello?: Maybe<Scalars['String']['output']>;
+};
+
+
+export type QueryGetCompletedTodosArgs = {
+  pagination?: InputMaybe<PaginationInput>;
+};
+
+
+export type QueryGetIncompleteTodosArgs = {
+  pagination?: InputMaybe<PaginationInput>;
 };
 
 
@@ -230,6 +242,8 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
+  getCompletedTodos?: Resolver<Maybe<Array<ResolversTypes['Todo']>>, ParentType, ContextType, Partial<QueryGetCompletedTodosArgs>>;
+  getIncompleteTodos?: Resolver<Maybe<Array<ResolversTypes['Todo']>>, ParentType, ContextType, Partial<QueryGetIncompleteTodosArgs>>;
   getTodo?: Resolver<Maybe<ResolversTypes['Todo']>, ParentType, ContextType, RequireFields<QueryGetTodoArgs, 'id'>>;
   getTodos?: Resolver<Maybe<Array<ResolversTypes['Todo']>>, ParentType, ContextType, Partial<QueryGetTodosArgs>>;
   getTodosByCompletion?: Resolver<Maybe<Array<ResolversTypes['Todo']>>, ParentType, ContextType, RequireFields<QueryGetTodosByCompletionArgs, 'completed'>>;

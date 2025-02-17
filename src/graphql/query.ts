@@ -36,12 +36,43 @@ export const Query: IQuery<Context> = {
       updatedAt: todo.updatedAt.toISOString(),
     }));
   },
+  getCompletedTodos: async (_, { pagination }, { prisma }) => {
+    const page = pagination?.page ?? 1;
+    const limit = pagination?.limit ?? Number.MAX_SAFE_INTEGER;
+    const todos = await prisma.todo.findMany({
+      where: {completed: true},
+      skip: (page - 1) * limit,
+      take: limit,
+    });
+    return todos.map(todo => ({
+      id: todo.id,
+      title: todo.title,
+      completed: todo.completed,
+      createdAt: todo.createdAt.toISOString(),
+      updatedAt: todo.updatedAt.toISOString(),
+    }));
+  },
+  getIncompleteTodos: async (_, { pagination }, { prisma }) => {
+    const page = pagination?.page ?? 1;
+    const limit = pagination?.limit ?? Number.MAX_SAFE_INTEGER;
+    const todos = await prisma.todo.findMany({
+      where: {completed: false},
+      skip: (page - 1) * limit,
+      take: limit,
+    });
+    return todos.map(todo => ({
+      id: todo.id,
+      title: todo.title,
+      completed: todo.completed,
+      createdAt: todo.createdAt.toISOString(),
+      updatedAt: todo.updatedAt.toISOString(),
+    }));
+  },
 
   getTodosByCompletion: async(_, {completed, pagination}, { prisma}) => {
     if (typeof completed !== 'boolean'){
       throw new Error('Completion status must be of type boolean.');
     }
-    //if pagination inputs are not provided, show all results
     const page = pagination?.page ?? 1;
     const limit = pagination?.limit ?? Number.MAX_SAFE_INTEGER;
     const todos = await prisma.todo.findMany({
