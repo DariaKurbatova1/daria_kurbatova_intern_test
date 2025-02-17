@@ -23,10 +23,13 @@ export const typeDefs = /* GraphQL */ `
     getTodosByCompletion(completed: Boolean!, pagination: PaginationInput): [Todo!],
     getCompletedTodos(pagination: PaginationInput): [Todo!],
     getIncompleteTodos(pagination: PaginationInput): [Todo!],
+    getOverdueTodos(pagination: PaginationInput): [Todo!],
+    getUpcomingTodos(pagination: PaginationInput): [Todo!],
   }
   
   input CreateTodoInput {
     title: String!
+    dueDate: String
   }
   input DeleteTodoInput {
     id: String!
@@ -38,6 +41,7 @@ export const typeDefs = /* GraphQL */ `
     completed: Boolean!
     createdAt: String!
     updatedAt: String!
+    dueDate: String
   }
   input UpdateTodoCompletionInput {
     id: ID!

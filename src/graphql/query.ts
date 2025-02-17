@@ -17,6 +17,7 @@ export const Query: IQuery<Context> = {
       completed: todo.completed,
       createdAt: todo.createdAt.toISOString(),
       updatedAt: todo.updatedAt.toISOString(),
+      dueDate: todo.dueDate?.toISOString(),
     }
   },
 
@@ -37,6 +38,7 @@ export const Query: IQuery<Context> = {
       completed: todo.completed,
       createdAt: todo.createdAt.toISOString(),
       updatedAt: todo.updatedAt.toISOString(),
+      dueDate: todo.dueDate?.toISOString(),
     }));
   },
   getCompletedTodos: async (_, { pagination }, { prisma }) => {
@@ -56,6 +58,7 @@ export const Query: IQuery<Context> = {
       completed: todo.completed,
       createdAt: todo.createdAt.toISOString(),
       updatedAt: todo.updatedAt.toISOString(),
+      dueDate: todo.dueDate?.toISOString(),
     }));
   },
   getIncompleteTodos: async (_, { pagination }, { prisma }) => {
@@ -75,6 +78,7 @@ export const Query: IQuery<Context> = {
       completed: todo.completed,
       createdAt: todo.createdAt.toISOString(),
       updatedAt: todo.updatedAt.toISOString(),
+      dueDate: todo.dueDate?.toISOString(),
     }));
   },
 
@@ -98,6 +102,57 @@ export const Query: IQuery<Context> = {
       completed: todo.completed,
       createdAt: todo.createdAt.toISOString(),
       updatedAt: todo.updatedAt.toISOString(),
+      dueDate: todo.dueDate?.toISOString(),
+    }));
+  },
+  //todos with a due date before today
+  getOverdueTodos: async(_, { pagination }, { prisma }) => {
+    const page = pagination?.page ?? 1;
+    const limit = pagination?.limit ?? Number.MAX_SAFE_INTEGER;
+    const todos = await prisma.todo.findMany({
+      where: {
+        dueDate: {
+          lt: new Date(),
+        },
+      },
+      skip: (page - 1) * limit,
+      take: limit,
+      orderBy: {
+        createdAt: 'asc',
+      },
+    });
+    return todos.map(todo => ({
+      id: todo.id,
+      title: todo.title,
+      completed: todo.completed,
+      createdAt: todo.createdAt.toISOString(),
+      updatedAt: todo.updatedAt.toISOString(),
+      dueDate: todo.dueDate?.toISOString(),
+    }));
+  },
+  //todos with a due date later than today
+  getUpcomingTodos: async(_, { pagination }, { prisma }) => {
+    const page = pagination?.page ?? 1;
+    const limit = pagination?.limit ?? Number.MAX_SAFE_INTEGER;
+    const todos = await prisma.todo.findMany({
+      where: {
+        dueDate: {
+          gt: new Date(),
+        },
+      },
+      skip: (page - 1) * limit,
+      take: limit,
+      orderBy: {
+        createdAt: 'asc',
+      },
+    });
+    return todos.map(todo => ({
+      id: todo.id,
+      title: todo.title,
+      completed: todo.completed,
+      createdAt: todo.createdAt.toISOString(),
+      updatedAt: todo.updatedAt.toISOString(),
+      dueDate: todo.dueDate?.toISOString(),
     }));
   }
 }
