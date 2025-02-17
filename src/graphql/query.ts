@@ -32,6 +32,9 @@ export const Query: IQuery<Context> = {
   },
 
   getTodosByCompletion: async(_, {completed}, { prisma}) => {
+    if (typeof completed !== 'boolean'){
+      throw new Error('Completion status must be of type boolean.');
+    }
     const todos = await prisma.todo.findMany({
       where: {completed: completed}
     });
