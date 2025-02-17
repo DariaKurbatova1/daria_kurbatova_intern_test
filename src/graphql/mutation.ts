@@ -21,7 +21,11 @@ export const Mutation: IMutation<Context> = {
     let dueDate = null;
     //if dueDate is specified, format it correctly
     if (input.dueDate){
-      dueDate = new Date(input.dueDate).toISOString();
+      const formattedDate = new Date(input.dueDate)
+      if(isNaN(formattedDate.getTime())){
+        throw new Error('Invalid due date format, must be ISO String');
+      }
+      dueDate = formattedDate.toISOString();
     }
     const todo = await prisma.todo.create({
       data:  {
