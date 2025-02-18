@@ -15,6 +15,7 @@
     "@types/express": "^5.0.0",
     "env-cmd": "^10.1.0",
     "nodemon": "^3.1.9",
+    "prettier": "3.5.1",
     "prisma": "^6.3.1",
     "reflect-metadata": "^0.2.2",
     "ts-node": "^10.9.2",
@@ -22,6 +23,7 @@
   },
   "dependencies": {
     "@prisma/client": "^6.3.1",
+    "eslint": "^9.20.1",
     "express": "^4.17.1",
     "graphql": "^16.10.0",
     "graphql-yoga": "^5.10.8",
